@@ -1,7 +1,7 @@
 <?php
 
 include 'koneksi.php';
-
+include 'check_login.php';
 // CREATE / INSERT
 if (isset($_POST['add'])) {
   $supplier = $_POST['supplier'];

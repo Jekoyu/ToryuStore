@@ -1,7 +1,7 @@
 <?php
 
 include 'koneksi.php';
-
+include 'check_login.php';
 // Tambah Supplier
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_supplier'])) {
     $name = $_POST['supplierName'];
@@ -54,6 +54,8 @@ $suppliers = $conn->query("SELECT * FROM supplier");
             background-color: #343a40;
             color: white;
             padding-top: 20px;
+            z-index: 1000; /* Pastikan di bawah modal */
+            overflow-y: auto;
         }
 
         #sidebar a {
@@ -71,17 +73,26 @@ $suppliers = $conn->query("SELECT * FROM supplier");
         .content {
             margin-left: 250px;
             padding: 20px;
+            width: calc(100% - 250px);
+            position: relative;
         }
 
-        .table th,
-        .table td {
+        /* Perbaikan untuk modal */
+        .modal-backdrop {
+            z-index: 1040 !important; /* Lebih tinggi dari sidebar */
+        }
+        
+        .modal {
+            z-index: 1050 !important; /* Lebih tinggi dari backdrop */
+        }
+
+        /* Style lainnya tetap sama */
+        .table th, .table td {
             text-align: center;
         }
-
         .pagination {
             justify-content: center;
         }
-
         .d-flex-between {
             display: flex;
             justify-content: space-between;
@@ -103,7 +114,7 @@ $suppliers = $conn->query("SELECT * FROM supplier");
     </div>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="content">
         <h1 class="my-4">Dashboard Supplier</h1>
         <div class="container mt-5">
             <div class="row mb-4 d-flex-between">

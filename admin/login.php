@@ -19,8 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    // Verify password
-    if (password_verify($pass, $row['password'])) {
+    // Cek password biasa (tanpa hash)
+    if ($pass === $row['password']) {
       // Save user data to session
       $_SESSION['admin_id'] = $row['id'];
       $_SESSION['username'] = $row['username'];
@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 $conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +87,7 @@ $conn->close();
     <?php if ($error_message): ?>
       <div class="alert alert-danger"><?php echo $error_message; ?></div>
     <?php endif; ?>
-    <form action="ds_sidebar_p.php" method="POST">
+    <form action="" method="POST">
       <!-- Username Input -->
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>

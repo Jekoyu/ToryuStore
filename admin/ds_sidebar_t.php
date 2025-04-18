@@ -1,7 +1,7 @@
 <?php
 
 include 'koneksi.php';
-
+include 'check_login.php';
 
 // Mengambil semua transaksi
 function getAllTransactions()
@@ -169,7 +169,6 @@ if (isset($_POST['delete'])) {
 
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -188,6 +187,8 @@ if (isset($_POST['delete'])) {
       background-color: #343a40;
       color: white;
       padding-top: 20px;
+      z-index: 1000;
+      overflow-y: auto;
     }
 
     #sidebar a {
@@ -205,6 +206,26 @@ if (isset($_POST['delete'])) {
     .content {
       margin-left: 250px;
       padding: 20px;
+      width: calc(100% - 250px);
+    }
+
+    /* Untuk memastikan container tidak melebihi lebar yang tersedia */
+    .container {
+      max-width: 100%;
+      padding-right: 15px;
+      padding-left: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    /* Untuk tabel responsif */
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    /* Untuk modal yang tidak terpotong */
+    .modal {
+      z-index: 1050;
     }
   </style>
 </head>
@@ -221,7 +242,7 @@ if (isset($_POST['delete'])) {
     <a href="#" class="logout text-center text-danger" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
   </div>
 
-  <div class="container">
+  <div class="content">
     <h1 class="my-4">Dashboard Transaksi</h1>
     <div class="container mt-5">
       <div class="row mb-4 d-flex-between">
