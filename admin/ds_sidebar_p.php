@@ -69,6 +69,7 @@ $result = $conn->query($sql);
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -132,13 +133,16 @@ $result = $conn->query($sql);
                 height: auto;
                 position: relative;
             }
+
             .main-content {
                 margin-left: 0;
                 width: 100%;
             }
+
             .modal-dialog {
                 max-width: 90%;
             }
+
             .card {
                 width: 100%;
             }
@@ -155,6 +159,7 @@ $result = $conn->query($sql);
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div id="sidebar">
@@ -176,23 +181,24 @@ $result = $conn->query($sql);
 
             <div class="row mt-4">
                 <?php while ($row = $result->fetch_assoc()): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="data:image/jpeg;base64,<?= base64_encode($row['img']) ?>" class="card-img-top" alt="Product Image">
-                        <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($row['nama_produk']) ?></h5>
-                            <p class="card-text">Harga: Rp <?= number_format($row['harga_produk'], 2, ',', '.') ?></p>
-                            <p class="card-text">Stok: <?= htmlspecialchars($row['stock']) ?></p>
-                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editProductModal" onclick='fillEditForm(<?= json_encode([
-                                'id' => $row['id'],
-                                'nama_produk' => $row['nama_produk'],
-                                'harga_produk' => $row['harga_produk'],
-                                'stock' => $row['stock']
-                            ]) ?>'>Edit</button>
-                            <a href="?action=delete&id=<?= $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Hapus produk ini?')">Hapus</a>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <img src="data:image/jpeg;base64,<?= base64_encode($row['img']) ?>" class="card-img-top" alt="Product Image">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($row['nama_produk']) ?></h5>
+                                <p class="card-text">Harga: Rp <?= number_format($row['harga_produk'], 2, ',', '.') ?></p>
+                                <p class="card-text">Stok: <?= htmlspecialchars($row['stock']) ?></p>
+                                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editProductModal"
+                                    onclick='fillEditForm(<?= json_encode([
+                                                                "id" => $row["id"],
+                                                                "nama_produk" => $row["nama_produk"],
+                                                                "harga_produk" => $row["harga_produk"],
+                                                                "stock" => $row["stock"]
+                                                            ]) ?>)'>Edit</button>
+                                <a href="?action=delete&id=<?= $row['id'] ?>" class="btn btn-danger" onclick="return confirm('Hapus produk ini?')">Hapus</a>
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php endwhile; ?>
             </div>
         </div>
@@ -255,7 +261,9 @@ $result = $conn->query($sql);
                         <input type="number" name="stock" id="editStock" class="form-control" required>
                     </div>
                     <div class="mb-3">
-                        <label>Gambar</label>
+                        <label>Gambar Saat Ini</label>
+                        <img id="currentImage" src="" class="img-thumbnail mb-2" style="max-height: 150px; display: none;">
+                        <label>Ubah Gambar (opsional)</label>
                         <input type="file" name="img" id="editImg" class="form-control">
                     </div>
                 </div>
@@ -288,19 +296,25 @@ $result = $conn->query($sql);
 
     <script>
         function fillEditForm(product) {
-            console.log(product);
-            if (!product || !product.id) {
-                console.error("Data produk tidak valid:", product);
-                return;
+            try {
+                // Parse jika product adalah string JSON
+                if (typeof product === 'string') {
+                    product = JSON.parse(product);
+                }
+
+                document.getElementById('editId').value = product.id;
+                document.getElementById('editNamaProduk').value = product.nama_produk;
+                document.getElementById('editHargaProduk').value = product.harga_produk;
+                document.getElementById('editStock').value = product.stock;
+                // Tidak perlu set value untuk file input karena tidak diperbolehkan
+            } catch (error) {
+                console.error("Error in fillEditForm:", error);
+                alert("Terjadi kesalahan saat memuat data produk");
             }
-            document.getElementById('editId').value = product.id;
-            document.getElementById('editNamaProduk').value = product.nama_produk;
-            document.getElementById('editHargaProduk').value = product.harga_produk;
-            document.getElementById('editStock').value = product.stock;
-            document.getElementById('editImg').value = product.img;
         }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

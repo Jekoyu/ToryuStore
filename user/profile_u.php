@@ -64,37 +64,37 @@
             </div>
         </div>
 
-            <!-- Modal Edit Profil -->
-    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProfileModalLabel">Edit Profil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <!-- Modal Edit Profil -->
+        <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Edit Profil</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form method="POST" action="cek_edit_profile.php">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="editName" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="editName" name="nama_user" value="<?php echo $_SESSION['nama_user']; ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="editEmail" name="email" value="<?php echo $_SESSION['email']; ?>" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editPhone" class="form-label">No. HP</label>
+                                <input type="text" class="form-control" id="editPhone" name="no_hp" value="<?php echo $_SESSION['no_hp']; ?>" required>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
+                        </div>
+                    </form>
                 </div>
-                <form method="POST" action="cek_edit_profile.php">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="editName" class="form-label">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="editName" name="nama_user" value="<?php echo $_SESSION['nama_user']; ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editEmail" class="form-label">Email</label>
-                            <input type="email" class="form-control" id="editEmail" name="email" value="<?php echo $_SESSION['email']; ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="editPhone" class="form-label">No. HP</label>
-                            <input type="text" class="form-control" id="editPhone" name="no_hp" value="<?php echo $_SESSION['no_hp']; ?>" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
 
 
         <!-- List Produk -->
